@@ -1,0 +1,162 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 110
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: !secret time_zone
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+   api_password: !secret http_password
+   ssl_certificate: !secret ssl_certificate
+   ssl_key: !secret ssl_key
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+   base_url: !secret base_url
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+#sensor:
+#  - platform: yr
+
+# Text to speech
+tts:
+  - platform: google
+    cache: true
+    cache_dir: /tts
+    time_memory: 300
+
+ios: !include configuration/ios.yaml
+
+ifttt:
+  key: !secret ifttt_key
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+light: !include lights.yaml
+switch: !include switches.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+shell_command: !include shell_commands.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml
+binary_sensor: !include binary_sensors.yaml
+
+device_tracker:
+  - platform: icloud
+    username: !secret icloud_user
+    password: !secret icloud_pass
+    account_name: Robert's iCloud
+  - platform: owntracks_http
+    max_gps_accuracy: 200
+
+
+#mqtt:
+#  broker: 192.168.85.40
+#  #client_id: hassio
+#  username: username
+#  password: password
+#  keepalive: 60
+#  protocol: 3.1.1
+
+mqtt: !include configuration/mqtt.yaml
+
+google_assistant:
+  project_id: !secret google_project_id
+  client_id: !secret google_client_id
+  access_token: !secret google_access_token
+  expose_by_default: false
+
+panel_iframe: !include configuration/panel_iframe.yaml
+
+
+camera: !include configuration/camera.yaml
+
+zoneminder:
+  host: !secret zoneminder_host
+  #path: ZM_PATH
+  #path_zms: ZM_PATH_ZMS
+  ssl: False
+  username: !secret zone_minder_user
+  password: !secret zone_minder_pass
+
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: !secret xiaomi_key
+
+
+media_player:
+  - platform: kodi
+    host: 192.168.85.139
+    name: MINIX
+
+
+climate: !include configuration/climate.yaml
+
+
+input_datetime:
+  both_date_and_time:
+    name: Input with both date and time
+    has_date: true
+    has_time: true
+  only_date:
+    name: Input with only date
+    has_date: true
+    has_time: false
+  only_time:
+    name: Input with only time
+    has_date: false
+    has_time: true
+
+hue:
+  bridges:
+    - host: 192.168.85.100
