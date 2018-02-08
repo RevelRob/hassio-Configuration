@@ -98,14 +98,6 @@ device_tracker:
     max_gps_accuracy: 200
 
 
-#mqtt:
-#  broker: 192.168.85.40
-#  #client_id: hassio
-#  username: username
-#  password: password
-#  keepalive: 60
-#  protocol: 3.1.1
-
 mqtt: !include configuration/mqtt.yaml
 
 google_assistant:
